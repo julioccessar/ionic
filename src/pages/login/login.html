@@ -7,15 +7,15 @@
   <ion-row>
     <ion-col col-12 col-md-6 offset-md-3>
       <ion-list>
-        <ion-item no-lines>
+        <ion-item class="login-item">
           <ion-label floating>Nombre de usuario</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input type="text" [(ngModel)]="datosLogin.username"></ion-input>
         </ion-item>
-        <ion-item no-lines>
+        <ion-item class="login-item">
           <ion-label floating>Contraseña</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-input type="password" [(ngModel)]="datosLogin.password"></ion-input>
         </ion-item>
-        <button ion-item color="secondary" margin-top text-center redondo>
+        <button ion-item color="secondary" margin-top text-center (click)="login();">
           Iniciar sesión
         </button>
       </ion-list>
