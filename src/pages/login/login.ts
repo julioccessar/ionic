@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController, Loading } from 'ionic-angular';
+
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage({
   name: 'login'
@@ -11,10 +13,14 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 export class LoginPage {
   public datosLogin: any;
 
+  private instanciaLoader: Loading;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
+    private auth: AuthProvider,
+    private loadingCtrl: LoadingController
   ) {
     this.datosLogin = {
       username: '',
@@ -35,6 +41,55 @@ export class LoginPage {
       });
 
       modalError.present();
+      return;
     }
+    // this.auth.login(this.datosLogin.username, this.datosLogin.password).then(
+    //   success => this.successLogin(success),
+    //   error => this.errorLogin(error)
+    // );
+    console.log('login button');
+    this.mostrarLoading('Iniciando sesión');
+    this.auth.loginObservable(this.datosLogin.username, this.datosLogin.password)
+      .subscribe(
+        success => this.successLogin(success),
+        error => this.errorLogin(error)
+      );
+
+  }
+
+  private successLogin(success): void {
+    this.ocultarLoading();
+    this.navCtrl.setRoot('home');
+    console.log('successLogin', success);
+  }
+
+  private errorLogin(error): void {
+    this.ocultarLoading();
+    this.mostrarToast(1500, error, 'bottom');
+    console.log('errorLogin', error);
+  }
+
+  private mostrarLoading(message: string): void {
+    this.instanciaLoader = this.loadingCtrl.create({
+      content: message
+    });
+    this.instanciaLoader.present();
+  }
+
+  private ocultarLoading(): void {
+    if(this.instanciaLoader) {
+      this.instanciaLoader.dismiss();
+      this.instanciaLoader = null;
+    }
+  }
+
+  private mostrarToast(duracion: number, mensaje: string, posicion: string): void {
+    let modalError = this.toastCtrl.create({
+      duration: duracion,
+      message: mensaje,
+      position: posicion
+    });
+
+    modalError.present();
   }
 }
