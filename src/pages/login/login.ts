@@ -14,6 +14,7 @@ export class LoginPage {
   public datosLogin: any;
 
   private instanciaLoader: Loading;
+  private localStorage: Storage;
 
   constructor(
     public navCtrl: NavController,
@@ -26,6 +27,8 @@ export class LoginPage {
       username: '',
       password: '',
     };
+
+    this.localStorage = window.localStorage;
   }
 
   ionViewDidLoad() {
@@ -59,6 +62,7 @@ export class LoginPage {
 
   private successLogin(success): void {
     this.ocultarLoading();
+    this.localStorage.setItem('logged', 'true');
     this.navCtrl.setRoot('home');
     console.log('successLogin', success);
   }
