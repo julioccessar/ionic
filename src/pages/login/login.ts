@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, Loading } from 'ionic-angular';
 
 import { AuthProvider } from '../../providers/auth/auth';
+import { User } from '../perfil/perfil';
 
 @IonicPage({
   name: 'login'
@@ -15,6 +16,7 @@ export class LoginPage {
 
   private instanciaLoader: Loading;
   private localStorage: Storage;
+  private userStore;
 
   constructor(
     public navCtrl: NavController,
@@ -33,6 +35,16 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+
+    let user = this.localStorage.getItem('user');
+
+    if (!user || user == null) {
+      this.userStore = new User('admin', 'admin', '', '', '', '');
+      this.localStorage.setItem('user', JSON.stringify(this.userStore));
+    } else {
+      this.userStore = JSON.parse(user);
+    }
+
   }
 
   public login(): void {
@@ -50,9 +62,10 @@ export class LoginPage {
     //   success => this.successLogin(success),
     //   error => this.errorLogin(error)
     // );
-    console.log('login button');
+
     this.mostrarLoading('Iniciando sesión');
-    this.auth.loginObservable(this.datosLogin.username, this.datosLogin.password)
+
+    this.auth.loginObservable(this.datosLogin.username, this.datosLogin.password, this.userStore)
       .subscribe(
         success => this.successLogin(success),
         error => this.errorLogin(error)
@@ -63,6 +76,7 @@ export class LoginPage {
   private successLogin(success): void {
     this.ocultarLoading();
     this.localStorage.setItem('logged', 'true');
+
     this.navCtrl.setRoot('home');
     console.log('successLogin', success);
   }
@@ -81,7 +95,7 @@ export class LoginPage {
   }
 
   private ocultarLoading(): void {
-    if(this.instanciaLoader) {
+    if (this.instanciaLoader) {
       this.instanciaLoader.dismiss();
       this.instanciaLoader = null;
     }

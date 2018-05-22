@@ -11,6 +11,17 @@
 
 
 <ion-content padding>
-<p>Con este párrafo voy a abrir el menú</p>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label stacked>Ingrese texto</ion-label>
+        <ion-input color="primary" clearInput [(ngModel)]="datosBusqueda.texto" placeholder="Buscar Pelicula"></ion-input>
+      </ion-item>
+
+    </ion-col>
+  </ion-row>
+  <button ion-button block (click)="buscarPelicula();" uppercase [disabled]="buscandoPeliculas">Buscar película</button>
+  <button ion-button block (click)="listFavourites();" uppercase >Favoritos</button>
+  <button ion-button block (click)="showPerfil();" uppercase >Perfil</button>
 </ion-content>
  
