@@ -89,32 +89,47 @@ export class HomePage {
 
   public listFavourites() {
     let favourites = this.localStorage.getItem('favourite');
-    let arr = favourites.split(";");
-    let resultado = [];
-    arr.forEach(element => {
-      if (element != 'null') {
-        console.log(JSON.parse(element));
-        let current = JSON.parse(element);
-        let find = false;
-        resultado.forEach(elem => {
-          if (elem.imdbID === current.imdbID) {
-            find = true;
-          }
-        });
+    console.log(favourites);
+    if (favourites) {
+      let arr = favourites.split(";");
+      let resultado = [];
+      arr.forEach(element => {
+        if (element != 'null') {
+          //console.log(JSON.parse(element));
+          let current = JSON.parse(element);
+          let find = false;
+          resultado.forEach(elem => {
+            if (elem.imdbID === current.imdbID) {
+              find = true;
+            }
+          });
 
-        if (!find) resultado.push(current);
-
-      }
-    });
-    let data = {
-      peliculasLista: { Search: resultado }
-    };
-    this.navCtrl.push('listado-peliculas', data);
-    console.log('successBuscarPelicula', resultado);
+          if (!find) resultado.push(current);
+        }
+      });
+      let data = {
+        peliculasLista: { Search: resultado }
+      };
+      this.navCtrl.push('listado-peliculas', data);
+      console.log('successBuscarPelicula', resultado);
+    } else {
+      let toastError = this.toastCtrl.create({
+        message: 'No tiene favoritas',
+        duration: 1500,
+        position: 'bottom'
+      });
+      toastError.present();
+      return;
+    }
   }
-
+/*
   public showPerfil() {
-    this.navCtrl.push('perfil-page');    
+    this.navCtrl.push('perfil-page');
   }
+  public logOut() {
+    this.localStorage.removeItem('logged');
+    this.localStorage.removeItem('user');
+    this.navCtrl.push('login');
+  }*/
 
 }

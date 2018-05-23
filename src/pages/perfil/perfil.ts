@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  */
 
 @IonicPage({
-  name: 'perfil-page'
+  name: 'perfil'
 })
 
 export class User {
@@ -61,7 +61,7 @@ export class PerfilPage {
   }
 
   cancel() {
-    this.navCtrl.pop();
+    this.navCtrl.push('home');
     this.setEdit(false);
   }
 

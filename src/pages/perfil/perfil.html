@@ -7,21 +7,19 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Perfil</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
   <ion-row>
     <ion-col col-12 col-md-6 offset-md-3>
-        <button *ngIf="!edit" ion-item color="primary" margin-top text-center (click)="setEdit(true);">
-            Editar
-        </button>
 
-      <ion-list >
+      <ion-list>
 
         <ion-item class="login-item">
           <ion-label floating>Nombre de usuario</ion-label>
@@ -44,19 +42,27 @@
           <ion-input [disabled]="!edit" type="text" [(ngModel)]="user.email"></ion-input>
         </ion-item>
         <ion-item class="login-item">
-            <ion-label floating>Fecha Nac</ion-label>
-            <ion-input [disabled]="!edit" type="text" [(ngModel)]="user.birth"></ion-input>
-          </ion-item>
+          <ion-label floating>Fecha Nac</ion-label>
+          <ion-input [disabled]="!edit" type="text" [(ngModel)]="user.birth"></ion-input>
+        </ion-item>
 
       </ion-list>
-  
 
-      <button *ngIf="edit" ion-item color="secondary" margin-top text-center (click)="save();">
-        Save
-      </button>
-      <button ion-item color="primary" margin-top text-center (click)="cancel();">
-        Cancelar
-      </button>
+      <ion-row>
+        <ion-col col-6>
+          <button *ngIf="edit" ion-item color="secondary" margin-top text-center (click)="save();">
+            Save
+          </button>
+          <button *ngIf="!edit" ion-item color="primary" margin-top text-center (click)="setEdit(true);">
+            Editar
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-item color="primary" margin-top text-center (click)="cancel();">
+            Cancelar
+          </button>
+        </ion-col>
+      </ion-row>
 
     </ion-col>
   </ion-row>
