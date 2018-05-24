@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { PeliculasProvider } from '../providers/peliculas/peliculas';
 import { HttpClientModule } from '@angular/common/http';
+import { Camera } from '@ionic-native/camera';//import in app.module.ts
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    PeliculasProvider
+    PeliculasProvider,
+    Camera
   ]
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the PerfilPage page.
@@ -19,6 +20,7 @@ export class User {
   public password: string;
   public email: string;
   public birth: string;
+  public notify: boolean;
 
   constructor(
     username: string,
@@ -26,7 +28,8 @@ export class User {
     name: string,
     surname: string,
     email: string,
-    birth: string
+    birth: string,
+    notify: boolean
   ) {
     this.name = name;
     this.password = password;
@@ -34,6 +37,7 @@ export class User {
     this.username = username;
     this.email = email;
     this.birth = birth;
+    this.notify = notify
   }
 }
 @Component({
@@ -45,7 +49,8 @@ export class PerfilPage {
   private localStorage: Storage;
   private user: User;
   public edit: boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera) {
     this.localStorage = window.localStorage;
     this.user = JSON.parse(this.localStorage.getItem('user'));
     this.edit = false;
@@ -67,5 +72,23 @@ export class PerfilPage {
 
   setEdit(value) {
     this.edit = value;
+  }
+
+  takePhoto() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
+
   }
 }

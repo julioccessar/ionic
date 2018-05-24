@@ -39,7 +39,7 @@ export class LoginPage {
     let user = this.localStorage.getItem('user');
 
     if (!user || user == null) {
-      this.userStore = new User('admin', 'admin', '', '', '', '');
+      this.userStore = new User('admin', 'admin', '', '', '', '',false);
       this.localStorage.setItem('user', JSON.stringify(this.userStore));
     } else {
       this.userStore = JSON.parse(user);
