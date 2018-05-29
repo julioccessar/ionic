@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 
 import { PeliculasProvider } from '../../providers/peliculas/peliculas';
 
+
 //import { HomePage } from '../home/home';
 
 /**
@@ -60,11 +61,44 @@ export class ListadoPeliculasPage {
     console.log('sharePelicula', pelicula);
   }
   public addToFavourite(pelicula): void {
-    console.log('addToFavourite', pelicula);
+    /*console.log('addToFavourite', pelicula);
     let favourites = this.localStorage.getItem('favourite');
     this.localStorage.setItem('favourite',
       favourites + ";" + JSON.stringify(pelicula)
-    );
+    );*/
+
+    let favourites = this.localStorage.getItem('favourite');
+    console.log(favourites);
+    if (favourites) {
+      let arr = favourites.split(";");
+      
+      let res = arr.filter(element => element !== "null").filter(element =>
+        JSON.parse(element).imdbID == pelicula.imdbID
+      );
+      let set = [];
+      if (res.length > 0) {// del
+        set = arr.filter(element => element !== "null").filter(element =>
+          JSON.parse(element).imdbID != pelicula.imdbID
+        );
+
+        this.localStorage.removeItem("favourite");
+        set.forEach(element => {
+          let favourites = this.localStorage.getItem('favourite');
+          this.localStorage.setItem('favourite',
+            favourites + ";" + element
+          );
+        });
+      } else {//add
+        this.localStorage.setItem('favourite',
+          favourites + ";" + JSON.stringify(pelicula)
+        );
+      }
+
+    } else {
+      this.localStorage.setItem('favourite',
+        JSON.stringify(pelicula)
+      );
+    }
 
   }
   public buyTicket(pelicula): void {

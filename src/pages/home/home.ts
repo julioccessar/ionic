@@ -94,17 +94,9 @@ export class HomePage {
       let arr = favourites.split(";");
       let resultado = [];
       arr.forEach(element => {
-        if (element != 'null') {
-          //console.log(JSON.parse(element));
+        if (element !== "null") {
           let current = JSON.parse(element);
-          let find = false;
-          resultado.forEach(elem => {
-            if (elem.imdbID === current.imdbID) {
-              find = true;
-            }
-          });
-
-          if (!find) resultado.push(current);
+          resultado.push(current);
         }
       });
       let data = {

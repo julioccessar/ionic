@@ -21,7 +21,7 @@ export class User {
   public email: string;
   public birth: string;
   public notify: boolean;
-
+  
   constructor(
     username: string,
     password: string,
@@ -49,6 +49,7 @@ export class PerfilPage {
   private localStorage: Storage;
   private user: User;
   public edit: boolean;
+  public base64Image: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera) {
     this.localStorage = window.localStorage;
@@ -85,7 +86,7 @@ export class PerfilPage {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.base64Image = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
       // Handle error
     });

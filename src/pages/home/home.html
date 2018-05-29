@@ -4,7 +4,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>    
+    <ion-title>Home</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -21,8 +21,15 @@
     </ion-col>
   </ion-row>
   <button ion-button block (click)="buscarPelicula();" uppercase [disabled]="buscandoPeliculas">Buscar película</button>
-  <button ion-button block (click)="listFavourites();" uppercase >Favoritos</button>
-  
-  
+
+
+
 </ion-content>
- 
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button icon-end (click)="listFavourites();" uppercase>
+      <ion-icon name="star"></ion-icon> Ver Favoritos
+    </button>
+  </ion-toolbar>
+</ion-footer>

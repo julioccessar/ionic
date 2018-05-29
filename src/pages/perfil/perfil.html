@@ -25,6 +25,7 @@
           <ion-col col-4>
             <ion-avatar item-start>
               <img src="../assets/imgs/avatar.jpg" style="height: 100px; width: 100px;">
+              <img [src]="base64Image" *ngIf="base64Image" />
             </ion-avatar>
           </ion-col>
           <ion-col col-4>
@@ -62,9 +63,9 @@
         </ion-item>
 
         <ion-item>
-            <ion-label>Recibir Notificaciones</ion-label>
-            <ion-checkbox [disabled]="!edit" [(ngModel)]="user.notify"></ion-checkbox>
-          </ion-item>
+          <ion-label>Recibir Notificaciones</ion-label>
+          <ion-checkbox [disabled]="!edit" [(ngModel)]="user.notify"></ion-checkbox>
+        </ion-item>
 
       </ion-list>
 
